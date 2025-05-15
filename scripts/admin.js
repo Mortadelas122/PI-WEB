@@ -26,28 +26,33 @@ document.getElementById('form-catalogo').addEventListener('submit', e => {
   });
 });
 
-// Agregar noticia
-document.getElementById('form-noticia').addEventListener('submit', e => {
+const formNoticia = document.getElementById('form-noticia');
+
+formNoticia.addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  const form = e.target;
+  const formData = new FormData(formNoticia);
   const data = {
-    titulo: form.titulo.value,
-    contenido: form.content.value || form.contenido.value // por si cambia nombre
+    titulo: formData.get('titulo'),
+    contenido: formData.get('contenido')
   };
 
-  fetch('/noticias', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
-  }).then(res => {
-    if (res.ok) {
-      alert("Noticia publicada");
-      form.reset();
-    } else {
-      alert("Error al publicar noticia");
+  try {
+    const response = await fetch('/noticias', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      alert('Error al publicar noticia: ' + (errorData.error || 'Desconocido'));
+      return;
     }
-  });
+
+    alert('Noticia publicada con éxito');
+    formNoticia.reset();
+  } catch (error) {
+    alert('Error al publicar noticia: ' + error.message);
+  }
 });
