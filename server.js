@@ -45,13 +45,16 @@ app.post('/catalogo', (req, res) => {
   );
 });
 
+// Ruta para agregar noticia
 app.post('/noticias', (req, res) => {
   const { titulo, contenido } = req.body;
-  db.run(`INSERT INTO noticias (titulo, contenido) VALUES (?, ?)`,
-    [titulo, contenido], function (err) {
-      if (err) return res.status(500).json({ error: err.message });
-      res.json({ id: this.lastID });
-    });
+  if (!titulo || !contenido) {
+    return res.status(400).json({ error: 'Faltan campos obligatorios' });
+  }
+  db.run('INSERT INTO noticias (titulo, contenido) VALUES (?, ?)', [titulo, contenido], function (err) {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json({ id: this.lastID, titulo, contenido });
+  });
 });
 
 const PORT = process.env.PORT || 8080;
