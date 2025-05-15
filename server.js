@@ -32,11 +32,17 @@ app.get('/noticias', (req, res) => {
 
 app.post('/catalogo', (req, res) => {
   const { titulo, imagen, video } = req.body;
-  db.run(`INSERT INTO catalogo (titulo, imagen, video) VALUES (?, ?, ?)`,
-    [titulo, imagen, video], function (err) {
-      if (err) return res.status(500).json({ error: err.message });
+  db.run(
+    'INSERT INTO catalogo (titulo, imagen, video) VALUES (?, ?, ?)',
+    [titulo, imagen, video],
+    function (err) {
+      if (err) {
+        console.error("Error al insertar en catalogo:", err.message);
+        return res.status(500).json({ error: err.message });
+      }
       res.json({ id: this.lastID });
-    });
+    }
+  );
 });
 
 app.post('/noticias', (req, res) => {
