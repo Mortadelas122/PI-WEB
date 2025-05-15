@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin - Agregar Contenido</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>Panel de Administración</h1>
+    <nav>
+      <a href="index.html">Catálogo</a>
+      <a href="noticias.html">Noticias</a>
+      <a href="admin.html">Admin</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h2>Agregar al Catálogo</h2>
+      <form id="form-catalogo">
+        <input type="text" placeholder="Título del auto" name="titulo" required />
+        <input type="url" placeholder="URL de imagen" name="imagen" required />
+        <input type="url" placeholder="URL de video" name="video" />
+        <button type="submit">Agregar</button>
+      </form>
+    </section>
+
+    <section>
+      <h2>Agregar Noticia</h2>
+      <form id="form-noticia">
+        <input type="text" placeholder="Título de la noticia" name="titulo" required />
+        <textarea placeholder="Contenido" name="contenido" required></textarea>
+        <button type="submit">Publicar</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Mundo Automovilismo</p>
+  </footer>
+
+  <script src="scripts/admin.js"></script>
+</body>
+</html>
