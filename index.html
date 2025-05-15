@@ -21,31 +21,28 @@
       <h2>Autos Destacados</h2>
       <div id="catalogo" class="grid"></div>
     </section>
-
-<div id="catalogoContainer"></div>
-<script>
-fetch("/catalogo")
-  .then(res => res.json())
-  .then(data => {
-    const container = document.getElementById("catalogoContainer");
-    container.innerHTML = "";
-    data.forEach(auto => {
-      container.innerHTML += `
-        <div class="card">
-          <h3>${auto.titulo}</h3>
-          <img src="${auto.imagen}" alt="imagen de ${auto.titulo}" width="300" />
-          ${auto.video ? `<iframe width="300" src="${auto.video}" frameborder="0" allowfullscreen></iframe>` : ""}
-        </div>
-      `;
-    });
-  });
-</script>
-    
   </main>
 
   <footer>
     <p>&copy; 2025 Mundo Automovilismo</p>
   </footer>
 
-  <script src="scripts/main.js"></script>
+  <script>
+    fetch("/catalogo")
+      .then(res => res.json())
+      .then(data => {
+        const container = document.getElementById("catalogo");
+        container.innerHTML = "";
+        data.forEach(auto => {
+          container.innerHTML += `
+            <div class="card">
+              <h3>${auto.titulo}</h3>
+              <img src="${auto.imagen}" alt="imagen de ${auto.titulo}" width="300" />
+              ${auto.video ? `<iframe width="300" src="${auto.video}" frameborder="0" allowfullscreen></iframe>` : ""}
+            </div>
+          `;
+        });
+      });
+  </script>
 </body>
+</html>
