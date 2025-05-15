@@ -1,35 +1,53 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const formCatalogo = document.getElementById("form-catalogo");
-  const formNoticia = document.getElementById("form-noticia");
 
-  formCatalogo.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const data = {
-      titulo: formCatalogo.titulo.value,
-      imagen: formCatalogo.imagen.value,
-      video: formCatalogo.video.value
-    };
-    await fetch("/catalogo", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
-    });
-    alert("Auto agregado al catálogo.");
-    formCatalogo.reset();
+// Agregar al catálogo
+document.getElementById('form-catalogo').addEventListener('submit', e => {
+  e.preventDefault();
+
+  const form = e.target;
+  const data = {
+    titulo: form.titulo.value,
+    imagen: form.imagen.value,
+    video: form.video.value || null,
+  };
+
+  fetch('/catalogo', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  }).then(res => {
+    if (res.ok) {
+      alert("Auto agregado al catálogo");
+      form.reset();
+    } else {
+      alert("Error al guardar auto");
+    }
   });
+});
 
-  formNoticia.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const data = {
-      titulo: formNoticia.titulo.value,
-      contenido: formNoticia.contenido.value
-    };
-    await fetch("/noticias", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
-    });
-    alert("Noticia publicada.");
-    formNoticia.reset();
+// Agregar noticia
+document.getElementById('form-noticia').addEventListener('submit', e => {
+  e.preventDefault();
+
+  const form = e.target;
+  const data = {
+    titulo: form.titulo.value,
+    contenido: form.content.value || form.contenido.value // por si cambia nombre
+  };
+
+  fetch('/noticias', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  }).then(res => {
+    if (res.ok) {
+      alert("Noticia publicada");
+      form.reset();
+    } else {
+      alert("Error al publicar noticia");
+    }
   });
 });
